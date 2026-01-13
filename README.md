@@ -1,3 +1,0 @@
-# java-herencia-grupo
-
-hola
