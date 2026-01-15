@@ -18,4 +18,4 @@ public class Desarrollador extends Empleado {
     public double calcularSalario() {
         return super.calcularSalario() + 500.0;
     }
-}
+} 
