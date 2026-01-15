@@ -18,4 +18,4 @@ public class Manager extends Empleado {
     public double calcularSalario() {
         return super.calcularSalario() + (personasACargo * 100.0);
     }
-}
+} 
