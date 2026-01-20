@@ -1,0 +1,18 @@
+package herencia;
+
+public class Persona {
+
+    private String dni;
+    protected String nombre;
+    protected int edad;
+
+    public Persona(String dni, String nombre, int edad) {
+        this.dni = dni;
+        this.nombre = nombre;
+        this.edad = edad;
+    }
+
+    public String presentarse() {
+        return "Hola, me llamo " + nombre + ", tengo " + edad + " años.";
+    }
+}
