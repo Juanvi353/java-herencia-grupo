@@ -1,21 +1,18 @@
+package herencia;
+
 public class Desarrollador extends Empleado {
+
     private String lenguajePrincipal;
 
-    public Desarrollador(String nombre, double salarioBase, String lenguajePrincipal) {
-        super(nombre, salarioBase); // Llama al constructor de Empleado
+    public Desarrollador(String dni, String nombre, int edad,
+                         double salarioBase, int antiguedadAnios,
+                         String lenguajePrincipal) {
+        super(dni, nombre, edad, salarioBase, antiguedadAnios);
         this.lenguajePrincipal = lenguajePrincipal;
-    }
-
-    public String getLenguajePrincipal() {
-        return lenguajePrincipal;
-    }
-
-    public void setLenguajePrincipal(String lenguaje) {
-        this.lenguajePrincipal = lenguaje;
     }
 
     @Override
     public double calcularSalario() {
-        return super.calcularSalario() + 500.0;
+        return super.calcularSalario() + 500;
     }
-} 
+}
