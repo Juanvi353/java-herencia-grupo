@@ -48,7 +48,5 @@ public class Departamento {
     }
 }
 
-public interface GestorEmpleados {
-    double obtenerSalario(String idEmpleado);
-}
+
 
