@@ -5,14 +5,14 @@ public class Empleado extends Persona {
     protected double salarioBase;
     protected int antiguedadAnios;
 
-    // NUEVOS ATRIBUTOS
+    
     protected String idEmpleado;
     protected LocalDate fechaContratacion;
     protected String departamento;
     protected double jornadaHoraria; // horas/día
     protected boolean activo;
 
-    // Constructor completo ORIGINAL (no se modifica)
+    
     public Empleado(String nombre, int edad, double salarioBase, int antiguedadAnios) {
         super(nombre, edad);
         this.salarioBase = salarioBase;
@@ -20,7 +20,7 @@ public class Empleado extends Persona {
         this.activo = true; // valor por defecto
     }
 
-    // NUEVO constructor ampliado (opcional pero útil)
+    
     public Empleado(String idEmpleado, String nombre, int edad, double salarioBase,
                     LocalDate fechaContratacion, String departamento, double jornadaHoraria) {
         super(nombre, edad);
@@ -33,7 +33,7 @@ public class Empleado extends Persona {
         this.antiguedadAnios = calcularAntiguedad();
     }
 
-    // NUEVO método calcularAntiguedad
+    
     public int calcularAntiguedad() {
         if (fechaContratacion == null) {
             return antiguedadAnios;
@@ -41,15 +41,14 @@ public class Empleado extends Persona {
         return LocalDate.now().getYear() - fechaContratacion.getYear();
     }
 
-    // calcularSalario MODIFICADO
-    // Plus por antigüedad: 3% por año
+
     public double calcularSalario() {
         int antiguedad = calcularAntiguedad();
         double plusAntiguedad = salarioBase * 0.03 * antiguedad;
         return salarioBase + plusAntiguedad;
     }
 
-    // toString ORIGINAL ampliado
+  
     @Override
     public String toString() {
         return super.toString()
