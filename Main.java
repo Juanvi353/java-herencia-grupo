@@ -1,9 +1,15 @@
+package herencia;
+
+import java.time.LocalDate;
 import java.util.Scanner;
 
 public class Main {
 
     private static Scanner scanner = new Scanner(System.in);
     private static boolean salir = false;
+
+    private static GestorEmpleados gestor = new GestorEmpleados();
+    private static Departamento departamentoIT = new Departamento("IT", "Carlos", 50000);
 
     public static void main(String[] args) {
 
@@ -39,8 +45,6 @@ public class Main {
         scanner.close();
     }
 
-    // ===== MENÚS =====
-
     private static void mostrarMenuPrincipal() {
         System.out.println("\n=== SISTEMA DE GESTIÓN Y FICHAJE ===");
         System.out.println("1. CONTRATACIÓN");
@@ -51,6 +55,7 @@ public class Main {
         System.out.println("6. SALIR");
     }
 
+    // ---------------------- Menú Contratación ----------------------
     private static void menuContratacion() {
         System.out.println("\n--- CONTRATACIÓN ---");
         System.out.println("1. Contratar empleado");
@@ -61,19 +66,73 @@ public class Main {
 
         switch (opcion) {
             case 1:
-                System.out.println("Contratando empleado...");
+                contratarEmpleado();
                 break;
             case 2:
-                System.out.println("Asignando a departamento...");
+                asignarADepartamento();
                 break;
             case 3:
-                System.out.println("Mostrando contratos activos...");
+                verContratosActivos();
                 break;
             default:
                 System.out.println("Opción no válida.");
         }
     }
 
+    private static void contratarEmpleado() {
+        System.out.println("\n--- NUEVO EMPLEADO ---");
+        System.out.print("DNI: ");
+        String dni = scanner.next();
+        System.out.print("ID empleado: ");
+        String id = scanner.next();
+        System.out.print("Nombre: ");
+        scanner.nextLine(); // Limpiar buffer
+        String nombre = scanner.nextLine();
+        System.out.print("Fecha nacimiento (YYYY-MM-DD): ");
+        LocalDate fechaNacimiento = LocalDate.parse(scanner.next());
+        System.out.print("Email: ");
+        String email = scanner.next();
+        System.out.print("Teléfono: ");
+        String telefono = scanner.next();
+        System.out.print("Salario base: ");
+        double salario = leerDouble("Salario base: ");
+        System.out.print("Fecha contratación (YYYY-MM-DD): ");
+        LocalDate fechaContratacion = LocalDate.parse(scanner.next());
+        System.out.print("Departamento: ");
+        String dep = scanner.next();
+        System.out.print("Jornada horaria (h/día): ");
+        double jornada = leerDouble("Jornada horaria: ");
+
+        Empleado e = new Empleado(dni, id, nombre, fechaNacimiento, email, telefono,
+                salario, fechaContratacion, dep, jornada);
+        gestor.agregarEmpleado(e);
+        System.out.println("Empleado contratado correctamente: " + e.getNombre());
+    }
+
+    private static void asignarADepartamento() {
+        System.out.println("\n--- ASIGNAR A DEPARTAMENTO ---");
+        System.out.print("ID empleado: ");
+        String id = scanner.next();
+        Empleado e = gestor.obtenerEmpleado(id);
+        if (e != null) {
+            departamentoIT.agregarEmpleado(id);
+            System.out.println("Empleado " + e.getNombre() + " asignado a departamento " + departamentoIT.getNombre());
+        } else {
+            System.out.println("Empleado no encontrado.");
+        }
+    }
+
+    private static void verContratosActivos() {
+        System.out.println("\n--- CONTRATOS ACTIVOS ---");
+        for (String id : departamentoIT.listarEmpleados()) {
+            Empleado e = gestor.obtenerEmpleado(id);
+            if (e != null) {
+                System.out.println(e);
+            }
+        }
+    }
+
+    // ---------------------- Menú Fichaje ----------------------
     private static void menuFichaje() {
         System.out.println("\n--- FICHAJE ---");
         System.out.println("1. Registrar entrada");
@@ -101,6 +160,7 @@ public class Main {
         }
     }
 
+    // ---------------------- Menú Nóminas ----------------------
     private static void menuNominas() {
         System.out.println("\n--- NÓMINAS ---");
         System.out.println("1. Calcular salario empleado");
@@ -111,19 +171,27 @@ public class Main {
 
         switch (opcion) {
             case 1:
-                System.out.println("Calculando salario...");
+                System.out.print("ID empleado: ");
+                String id = scanner.next();
+                Empleado e = gestor.obtenerEmpleado(id);
+                if (e != null) {
+                    System.out.println("Salario de " + e.getNombre() + ": " + e.calcularSalario());
+                } else {
+                    System.out.println("Empleado no encontrado.");
+                }
                 break;
             case 2:
-                System.out.println("Calculando nómina total...");
+                System.out.println("Nómina total departamento IT: " + departamentoIT.calcularNominaDepartamento(gestor));
                 break;
             case 3:
-                System.out.println("Mostrando historial de pagos...");
+                System.out.println("Mostrando historial de pagos (simulado)...");
                 break;
             default:
                 System.out.println("Opción no válida.");
         }
     }
 
+    // ---------------------- Menú Proyectos ----------------------
     private static void menuProyectos() {
         System.out.println("\n--- PROYECTOS ---");
         System.out.println("1. Asignar a proyecto");
@@ -147,6 +215,7 @@ public class Main {
         }
     }
 
+    // ---------------------- Menú Informes ----------------------
     private static void menuInformes() {
         System.out.println("\n--- INFORMES ---");
         System.out.println("1. Empleados por departamento");
@@ -158,7 +227,13 @@ public class Main {
 
         switch (opcion) {
             case 1:
-                System.out.println("Mostrando empleados por departamento...");
+                System.out.println("Empleados en IT:");
+                for (String id : departamentoIT.listarEmpleados()) {
+                    Empleado e = gestor.obtenerEmpleado(id);
+                    if (e != null) {
+                        System.out.println("- " + e.getNombre());
+                    }
+                }
                 break;
             case 2:
                 System.out.println("Mostrando asistencia mensual...");
@@ -174,8 +249,7 @@ public class Main {
         }
     }
 
-    // ===== UTILIDAD =====
-
+    // ---------------------- Métodos auxiliares ----------------------
     private static int leerEntero(String mensaje) {
         System.out.print(mensaje);
         while (!scanner.hasNextInt()) {
@@ -183,5 +257,14 @@ public class Main {
             scanner.next();
         }
         return scanner.nextInt();
+    }
+
+    private static double leerDouble(String mensaje) {
+        System.out.print(mensaje);
+        while (!scanner.hasNextDouble()) {
+            System.out.print("Introduce un número válido: ");
+            scanner.next();
+        }
+        return scanner.nextDouble();
     }
 }

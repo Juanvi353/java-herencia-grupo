@@ -1,5 +1,6 @@
 package herencia;
 
+
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.*;
@@ -32,11 +33,11 @@ public class GestorFichajes {
 
         for (Fichaje f : lista) {
             if (f.getFechaHoraEntrada() != null &&
-                f.getFechaHoraEntrada().toLocalDate().equals(fecha)) {
+                    f.getFechaHoraEntrada().toLocalDate().equals(fecha)) {
                 resultado.add(f);
             }
             if (f.getFechaHoraSalida() != null &&
-                f.getFechaHoraSalida().toLocalDate().equals(fecha)) {
+                    f.getFechaHoraSalida().toLocalDate().equals(fecha)) {
                 resultado.add(f);
             }
         }
@@ -50,15 +51,15 @@ public class GestorFichajes {
 
         for (Fichaje f : lista) {
             if (f.getTipo().equals("ENTRADA") &&
-                f.getFechaHoraEntrada().getMonthValue() == mes &&
-                f.getFechaHoraEntrada().getYear() == año) {
+                    f.getFechaHoraEntrada().getMonthValue() == mes &&
+                    f.getFechaHoraEntrada().getYear() == año) {
                 entrada = f;
             }
 
             if (f.getTipo().equals("SALIDA") &&
-                entrada != null &&
-                f.getFechaHoraSalida().getMonthValue() == mes &&
-                f.getFechaHoraSalida().getYear() == año) {
+                    entrada != null &&
+                    f.getFechaHoraSalida().getMonthValue() == mes &&
+                    f.getFechaHoraSalida().getYear() == año) {
 
                 horas += Duration.between(
                         entrada.getFechaHoraEntrada(),

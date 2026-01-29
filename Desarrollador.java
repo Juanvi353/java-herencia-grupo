@@ -1,3 +1,6 @@
+package herencia;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public class Desarrollador extends Empleado {
@@ -7,15 +10,24 @@ public class Desarrollador extends Empleado {
     private List<String> tecnologias;
     private double horasExtra;
 
-    public Desarrollador(String nombre, double salarioBase, String lenguajePrincipal,
-                         String nivel, List<String> tecnologias) {
-        super(nombre, salarioBase);
+    /**
+     * Constructor completo del desarrollador
+     */
+    public Desarrollador(String dni, String idEmpleado, String nombre, LocalDate fechaNacimiento,
+                         String email, String telefono, double salarioBase,
+                         LocalDate fechaContratacion, String departamento, double jornadaHoraria,
+                         String lenguajePrincipal, String nivel, List<String> tecnologias) {
+
+        super(dni, idEmpleado, nombre, fechaNacimiento, email, telefono,
+                salarioBase, fechaContratacion, departamento, jornadaHoraria);
+
         this.lenguajePrincipal = lenguajePrincipal;
         this.nivel = nivel;
         this.tecnologias = tecnologias;
         this.horasExtra = 0.0;
     }
 
+    // ---------------------- Getters y Setters ----------------------
     public String getLenguajePrincipal() {
         return lenguajePrincipal;
     }
@@ -44,12 +56,20 @@ public class Desarrollador extends Empleado {
         return horasExtra;
     }
 
+    /**
+     * Registrar horas extra
+     */
     public void registrarHoraExtra(double horas) {
         if (horas > 0) {
             this.horasExtra += horas;
+        } else {
+            System.out.println("No se pueden registrar horas negativas o cero.");
         }
     }
 
+    /**
+     * Calcular salario del desarrollador
+     */
     @Override
     public double calcularSalario() {
         double salario = super.calcularSalario();
@@ -67,8 +87,18 @@ public class Desarrollador extends Empleado {
                 break;
         }
 
+        // Plus por horas extra
         salario += horasExtra * 20;
 
         return salario;
+    }
+
+    @Override
+    public String toString() {
+        return super.toString()
+                + ", Lenguaje: " + lenguajePrincipal
+                + ", Nivel: " + nivel
+                + ", Tecnologías: " + tecnologias
+                + ", Horas extra: " + horasExtra;
     }
 }
