@@ -9,7 +9,7 @@ public class Empleado extends Persona {
     protected String idEmpleado;
     protected LocalDate fechaContratacion;
     protected String departamento;
-    protected double jornadaHoraria; // horas/día
+    protected double jornadaHoraria; 
     protected boolean activo;
 
     
@@ -17,7 +17,7 @@ public class Empleado extends Persona {
         super(nombre, edad);
         this.salarioBase = salarioBase;
         this.antiguedadAnios = antiguedadAnios;
-        this.activo = true; // valor por defecto
+        this.activo = true;
     }
 
     
