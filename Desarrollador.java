@@ -1,5 +1,3 @@
-package herencia;
-
 import java.util.List;
 
 public class Desarrollador extends Empleado {
@@ -9,17 +7,47 @@ public class Desarrollador extends Empleado {
     private List<String> tecnologias;
     private double horasExtra;
 
-    public Desarrollador(String dni, String nombre, int edad,
-                         double salarioBase, int antiguedadAnios,
-                         String lenguajePrincipal,
-                         String nivel,
-                         List<String> tecnologias) {
-
-        super(dni, nombre, edad, salarioBase, antiguedadAnios);
+    public Desarrollador(String nombre, double salarioBase, String lenguajePrincipal,
+                         String nivel, List<String> tecnologias) {
+        super(nombre, salarioBase);
         this.lenguajePrincipal = lenguajePrincipal;
         this.nivel = nivel;
         this.tecnologias = tecnologias;
-        this.horasExtra = 0;
+        this.horasExtra = 0.0;
+    }
+
+    public String getLenguajePrincipal() {
+        return lenguajePrincipal;
+    }
+
+    public void setLenguajePrincipal(String lenguajePrincipal) {
+        this.lenguajePrincipal = lenguajePrincipal;
+    }
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
+
+    public List<String> getTecnologias() {
+        return tecnologias;
+    }
+
+    public void setTecnologias(List<String> tecnologias) {
+        this.tecnologias = tecnologias;
+    }
+
+    public double getHorasExtra() {
+        return horasExtra;
+    }
+
+    public void registrarHoraExtra(double horas) {
+        if (horas > 0) {
+            this.horasExtra += horas;
+        }
     }
 
     @Override
@@ -27,39 +55,20 @@ public class Desarrollador extends Empleado {
         double salario = super.calcularSalario();
 
         // Plus por nivel
-        switch (nivel.toLowerCase()) {
-            case "mid":
+        switch (nivel) {
+            case "Mid":
                 salario *= 1.15;
                 break;
-            case "senior":
+            case "Senior":
                 salario *= 1.30;
                 break;
-            case "junior":
+            case "Junior":
             default:
                 break;
         }
 
-        // Horas extra
         salario += horasExtra * 20;
 
-        // Plus fijo por ser desarrollador
-        salario += 500;
-
         return salario;
-    }
-
-    public void registrarHoraExtra(double horas) {
-        if (horas > 0) {
-            horasExtra += horas;
-        }
-    }
-
-    @Override
-    public String toString() {
-        return nombre +
-                " - " + lenguajePrincipal +
-                " (" + nivel + ")" +
-                " - Tecnologías: " + tecnologias +
-                " - Salario: " + calcularSalario();
     }
 }

@@ -1,5 +1,3 @@
-package herencia;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +14,37 @@ public class Proyecto {
         this.idProyecto = idProyecto;
         this.nombre = nombre;
         this.horasEstimadas = horasEstimadas;
-        this.horasReales = 0;
+        this.horasReales = 0.0;
         this.estado = "PLANIFICADO";
         this.desarrolladoresAsignados = new ArrayList<>();
+    }
+
+    public String getIdProyecto() {
+        return idProyecto;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public List<String> getDesarrolladoresAsignados() {
+        return desarrolladoresAsignados;
+    }
+
+    public double getHorasEstimadas() {
+        return horasEstimadas;
+    }
+
+    public double getHorasReales() {
+        return horasReales;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
     }
 
     public void asignarDesarrollador(String idDesarrollador) {
@@ -28,20 +54,9 @@ public class Proyecto {
     }
 
     public void registrarHoras(String idDesarrollador, double horas) {
-        if (horas <= 0) {
-            return;
-        }
-
-        if (desarrolladoresAsignados.contains(idDesarrollador)) {
-            horasReales += horas;
-
-            if (estado.equals("PLANIFICADO")) {
-                estado = "EN_CURSO";
-            }
-
-            if (horasReales >= horasEstimadas) {
-                estado = "COMPLETADO";
-            }
+        if (desarrolladoresAsignados.contains(idDesarrollador) && horas > 0) {
+            this.horasReales += horas;
+            this.estado = "EN_CURSO";
         }
     }
 
@@ -50,13 +65,5 @@ public class Proyecto {
             return 0;
         }
         return (horasEstimadas / horasReales) * 100;
-    }
-
-    @Override
-    public String toString() {
-        return "Proyecto: " + nombre +
-                " | Estado: " + estado +
-                " | Devs: " + desarrolladoresAsignados +
-                " | Productividad: " + calcularProductividad() + "%";
     }
 }
